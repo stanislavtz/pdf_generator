@@ -27,4 +27,4 @@ for index, row in df.iterrows():
     for _ in range(row["Pages"] - 1):
         pdf.add_page()
 
-pdf.output("sample.pdf")
+pdf.output("Python_Notepad.pdf")
