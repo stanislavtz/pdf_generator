@@ -11,20 +11,30 @@ class PDF(FPDF):
         self.set_text_color(200, 200, 200)
         self.cell(w=0, h=10, txt=self.topic, border=0, align='R')
 
+    def draw_lines(self):
+        self.set_draw_color(200, 200, 200)
+        for y in range(17, 282, 6):
+            self.line(10, y, 200, y)
+
+
 
 pdf = PDF(orientation='P', unit='mm', format='A4')
 df = pd.read_csv('topics.csv')
 
-pdf.set_font('Arial', 'B', size=24)
-pdf.set_text_color(100, 100, 100)
 
 for index, row in df.iterrows():
+    pdf.set_font('Arial', 'B', size=24)
+    pdf.set_text_color(100, 100, 100)
     pdf.add_page()
     pdf.topic = row["Topic"]                   # footer text for this topic's pages
     pdf.cell(w=0, h=6, txt=row["Topic"], border=0, align='L')
-    pdf.line(10, 17, 207, 17)
+    pdf.line(10, 17, 200, 17)
+
+    pdf.draw_lines()
 
     for _ in range(row["Pages"] - 1):
         pdf.add_page()
+        pdf.draw_lines()
+
 
 pdf.output("Python_Notepad.pdf")
